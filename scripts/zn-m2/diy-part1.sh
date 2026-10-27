@@ -12,3 +12,6 @@
 
 # Uncomment a feed source
 #echo 'src-git custom https://github.com/xiaorouji/openwrt-passwall.git;packages' >>feeds.conf.default
+./scripts/feeds install -a -f
+# 或者手动加 wireguard feed（如果源码里没有的话）
+# src-git wireguard https://git.zx2c4.com/wireguard-tools.git
