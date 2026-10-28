@@ -1,4 +1,3 @@
-```makefile
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wireguard
@@ -35,4 +34,3 @@ define Build/Compile
 endef
 
 $(eval $(call KernelPackage,wireguard))
-```
