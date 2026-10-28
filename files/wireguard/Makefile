@@ -13,6 +13,11 @@ PKG_LICENSE_FILES:=COPYING
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
 
+define Build/Unpack
+	$(TAR) -C $(BUILD_DIR) -xJf $(DL_DIR)/$(PKG_SOURCE)
+	mv $(BUILD_DIR)/wireguard-linux-compat-$(PKG_VERSION) $(PKG_BUILD_DIR)
+endef
+
 define KernelPackage/wireguard
   SUBMENU:=Network Support
   TITLE:=WireGuard compat 1.0.20220627 (Linux‑4.4)
@@ -26,5 +31,3 @@ define Build/Compile
 endef
 
 $(eval $(call KernelPackage,wireguard))
-
-
