@@ -14,5 +14,5 @@
 #./scripts/feeds install -a -f -p passwall_luci
 rm -rf package/network/services/wireguard
 cp -r $GITHUB_WORKSPACE/files/wireguard package/network/services/
-cp $GITHUB_WORKSPACE/files/wireguard/wireguard-linux-compat-1.0.20220627.tar.xz dl/
+cp $GITHUB_WORKSPACE/files/wireguard/wireguard-linux-compat-1.0.20210606.tar.xz dl/
 
