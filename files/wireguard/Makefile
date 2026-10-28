@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wireguard
-PKG_VERSION:=1.0.20210606
+PKG_VERSION:=1.0.20220627
 PKG_RELEASE:=1
 
 PKG_SOURCE:=wireguard-linux-compat-$(PKG_VERSION).tar.xz
@@ -19,11 +19,21 @@ define Build/Prepare
 	rm -rf $(PKG_BUILD_DIR)
 	$(TAR) -xJf $(DL_DIR)/$(PKG_SOURCE) -C $(BUILD_DIR)
 	mv $(BUILD_DIR)/wireguard-linux-compat-$(PKG_VERSION) $(PKG_BUILD_DIR)
+	# 修复 skb_put_data 重定义冲突
+	sed -i '/static inline void \*skb_put_data/,/^}/c\
+#ifndef skb_put_data\
+static inline void *skb_put_data(struct sk_buff *skb, const void *data, unsigned int len)\
+{\
+	void *tmp = skb_put(skb, len);\
+	memcpy(tmp, data, len);\
+	return tmp;\
+}\
+#endif' $(PKG_BUILD_DIR)/src/compat/compat.h
 endef
 
 define KernelPackage/wireguard
   SUBMENU:=Network Support
-  TITLE:=WireGuard compat 1.0.20210606 (Linux 4.4)
+  TITLE:=WireGuard compat 1.0.20220627 (Linux 4.4)
   DEPENDS:=+kmod-crypto-aead +kmod-crypto-chacha20poly1305 +kmod-crypto-hash
   FILES:=$(PKG_BUILD_DIR)/src/wireguard.ko
   AUTOLOAD:=$(call AutoProbe,wireguard)
