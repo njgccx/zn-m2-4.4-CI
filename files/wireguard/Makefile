@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
 
 define Build/Prepare
-	mkdir -p $(PKG_BUILD_DIR)
+	rm -rf $(PKG_BUILD_DIR)
 	$(TAR) -xJf $(DL_DIR)/$(PKG_SOURCE) -C $(BUILD_DIR)
 	mv $(BUILD_DIR)/wireguard-linux-compat-$(PKG_VERSION) $(PKG_BUILD_DIR)
 endef
