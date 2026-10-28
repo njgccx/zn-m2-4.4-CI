@@ -19,7 +19,6 @@ define Build/Prepare
 	rm -rf $(PKG_BUILD_DIR)
 	$(TAR) -xJf $(DL_DIR)/$(PKG_SOURCE) -C $(BUILD_DIR)
 	mv $(BUILD_DIR)/wireguard-linux-compat-$(PKG_VERSION) $(PKG_BUILD_DIR)
-	# 删除整个 skb_put_data 兼容函数块
 	sed -i '/static inline void \*skb_put_data/,/^}/d' $(PKG_BUILD_DIR)/src/compat/compat.h
 endef
 
@@ -29,6 +28,7 @@ define KernelPackage/wireguard
   DEPENDS:=+kmod-crypto-aead +kmod-crypto-chacha20poly1305 +kmod-crypto-hash
   FILES:=$(PKG_BUILD_DIR)/src/wireguard.ko
   AUTOLOAD:=$(call AutoProbe,wireguard)
+  MODDEP:=
 endef
 
 define Build/Compile
