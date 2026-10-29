@@ -118,6 +118,10 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
+        grep -n -A 12 'KernelPackage/udptunnel4' \
+        package/kernel/linux/modules/netsupport.mk
+        grep -n -A 12 'KernelPackage/udptunnel6' \
+        package/kernel/linux/modules/netsupport.mk
 
     - name: Compile the firmware
       id: compile
