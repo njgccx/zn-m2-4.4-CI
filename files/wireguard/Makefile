@@ -25,7 +25,7 @@ endef
 define KernelPackage/wireguard
   SUBMENU:=Network Support
   TITLE:=WireGuard compat 1.0.20220627 (Linux 4.4)
-  DEPENDS:=+kmod-crypto-aead +kmod-crypto-chacha20poly1305 +kmod-crypto-hash +kmod-udptunnel4 +IPV6:kmod-udptunnel6
+  DEPENDS:=+kmod-crypto-aead +kmod-crypto-chacha20poly1305 +kmod-crypto-hash +kmod-udptunnel4 +kmod-udptunnel6
   FILES:=$(PKG_BUILD_DIR)/src/wireguard.ko
   AUTOLOAD:=$(call AutoProbe,wireguard)
 endef
