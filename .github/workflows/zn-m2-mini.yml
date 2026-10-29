@@ -118,10 +118,17 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        grep -n -A 12 'KernelPackage/udptunnel4' \
-        package/kernel/linux/modules/netsupport.mk
-        grep -n -A 12 'KernelPackage/udptunnel6' \
-        package/kernel/linux/modules/netsupport.mk
+      
+    - name: Check WireGuard tunnel dependencies
+      run: |
+        cd /workdir/openwrt
+
+        echo "===== Tunnel package definitions ====="
+        grep -n -A 12 'KernelPackage/udptunnel4' package/kernel/linux/modules/netsupport.mk
+        grep -n -A 12 'KernelPackage/udptunnel6' package/kernel/linux/modules/netsupport.mk
+
+        echo "===== IPv6 configuration ====="
+        grep -E 'CONFIG_IPV6=|CONFIG_PACKAGE_kmod-udptunnel[46]=' .config || true
 
     - name: Compile the firmware
       id: compile
